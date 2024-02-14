@@ -11,7 +11,6 @@ const controllers = {
 signUp: async (req:Request, res:Response) => {
   try {
     const { name, email, password } = req.body;
-    console.log(req.body, 'bodyyy');
     
     const isEmailExist = await isExistingUser(email);
 
@@ -104,6 +103,7 @@ signUp: async (req:Request, res:Response) => {
     }
     ,
 
+    //UPLOAD IMAGE
     upload:async(req:Request,res:Response)=>{
         try{
 
@@ -127,6 +127,7 @@ signUp: async (req:Request, res:Response) => {
       }
     },
 
+    //CHECK UNIQUE CODE
     checkCode:async(req:Request,res:Response)=>{
         try{
 
@@ -146,10 +147,10 @@ signUp: async (req:Request, res:Response) => {
 
     },
 
+    //GET ALL FILES
     allFiles:async(req:Request,res:Response)=>{
         try{
             const response= await allFilesHelper()
-            console.log(response);
             res.json(response)
             
 
@@ -162,6 +163,8 @@ signUp: async (req:Request, res:Response) => {
         }
     },
 
+
+    //GET MY UPLOADS
     myUploads:async(req:Request,res:Response)=>{
         try{
             
@@ -178,6 +181,7 @@ signUp: async (req:Request, res:Response) => {
         }
     },
 
+    //VERIFY UNIQUE CODE
     verifyCode:async(req:Request,res:Response)=>{
         try{
             
@@ -202,6 +206,7 @@ signUp: async (req:Request, res:Response) => {
         }
     },
 
+    //DELETE UNIQUE CODE
     deleteImage:async(req:Request,res:Response)=>{
         try{
             

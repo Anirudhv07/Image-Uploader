@@ -5,10 +5,7 @@ import { EllipsisVerticalIcon, ArrowDownCircleIcon, TrashIcon, XMarkIcon } from 
 import {
     Card,
     CardHeader,
-    CardBody,
-    CardFooter,
     Typography,
-    Tooltip,
     Spinner,
     Button,
     Menu,
@@ -24,7 +21,7 @@ import {
 import { useState } from 'react';
 
 import { MyNavbar } from '../Components/Home/NavBar'
-import { deleteImage, getAllFiles, verifyTheCode } from '../api/apiConnection/connection'
+import {  getAllFiles, verifyTheCode } from '../api/apiConnection/connection'
 import { useSelector } from 'react-redux';
 import DeleteDialog from '../Components/MyUploads/DeleteDialog';
 
@@ -46,16 +43,16 @@ function HomePage() {
     const [openDownload, setOpenDownload] = useState(false);
     const [codeStatus, setCodeStatus] = useState('')
     const [codeStatusStyle, setCodeStatusStyle] = useState('')
-    const { email } = useSelector((store: any) => store.user)
     const [loading, setLoading] = useState(false)
     const [openDelete, setOpenDelete] = useState(false);
     const [fileToDelete, setFileToDelete] = useState('')
-
+    
     const handleOpenDelete = (fileId: string) => {
-
+        
         setFileToDelete(fileId)
         setOpenDelete(!openDelete);
     }
+    const { email } = useSelector((store: any) => store.user)
 
     const handleOpenDownload = () => setOpenDownload(!openDownload);
 
@@ -64,6 +61,7 @@ function HomePage() {
 
     }, [])
 
+    //FUNCTION TO GET ALL FILES
     const allFiles = async () => {
         setLoading(true)
         const response = await getAllFiles()
@@ -74,12 +72,15 @@ function HomePage() {
         }
 
     }
+
+    //FUNCTION TO HANDLE DOWNLOAD
     const handleDownload = (file: string, id: string) => {
         setImgId(id)
         setCurrentFile(file)
         handleOpenDownload()
     }
 
+    //FUNCTION TO DOWNLOAD IMAGE
     const handleDownloadImage = async () => {
         try {
             await fetch(`http://localhost:3003/uploads/${currentFile}`)
@@ -100,17 +101,15 @@ function HomePage() {
     };
 
 
+    //FUNCTION TO HANDLE THE UNIQUE CODE
     const handleVerifyCode = (e: any) => {
         const value = e.target.value
         if (!/^\d*$/.test(value)) {
             setCheckDigits(true)
 
-
-            // Prevent further input by preventing default behavior
             e.preventDefault();
         } else {
             setCheckDigits(false)
-            // Check if the length of the value exceeds 6
             if (value.length != 6) {
 
                 setCodeLength(true);
@@ -119,12 +118,12 @@ function HomePage() {
                 setUniqueCode(value);
             }
 
-            // Update the state with the new value
         }
 
     }
 
 
+    //FUNCTION TO VERIFY UNIQUE CODE
     const checkUniqueCode = async () => {
         const response = await verifyTheCode(uniqueCode, imgId)
         if (response.status == true) {
@@ -244,8 +243,8 @@ function HomePage() {
             <DeleteDialog fileToDelete={fileToDelete}
                 openDelete={openDelete}
                 handleOpenDelete={handleOpenDelete}
-                setFiles={ setAllImageFiles} 
-                files={allImageFiles }
+                setFiles={setAllImageFiles}
+                files={allImageFiles}
             />
             <Dialog open={openDownload} handler={handleOpenDownload} placeholder={undefined}>
 

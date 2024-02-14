@@ -13,12 +13,8 @@ interface logInForm {
 
 //API TO SIGN UP
 export const signUp = async (values: signUpForm) => {
-    console.log('val',values);
-    
     const response = await baseURL.post('/signup', values)
-    console.log(response);
-    
-    return response?.data
+      return response?.data
 }
 
 //API TO LOGIN
@@ -27,6 +23,7 @@ export const logIn = async (values: logInForm) => {
     return response?.data
 }
 
+//API TO UPLOAD IMAGE
 export const uploadImage = async (image:any,email:string,uniqueCode:any)=>{
     const form = new FormData
         form.append('image', image)
@@ -39,19 +36,22 @@ export const uploadImage = async (image:any,email:string,uniqueCode:any)=>{
     
 }
 
-
+//API TO CHECK UNIQUE CODE
 export const checkCode = async (uniqueCode:number)=>{
     const response =await baseURL.post('/checkCode',{uniqueCode})
     return response.data
     
 }
 
+//API TO GET ALL FILE
 export const getAllFiles=async()=>{
     const response= await baseURL.get('/allFiles')
     return response.data
     
 }
 
+
+//API TO GET MY UPLOADED FILE
 export const getMyUploads=async(email:string)=>{
     
     const response= await baseURL.get('/my_uploads', {
@@ -63,6 +63,8 @@ export const getMyUploads=async(email:string)=>{
     
 }
 
+
+//API TO VERIFY THE UNIQUE CODE
 export const verifyTheCode=async(code:any,imgId:string)=>{
     const response=await baseURL.get('/verify_uniquecode',{   params: {
         code: code,
@@ -72,6 +74,7 @@ export const verifyTheCode=async(code:any,imgId:string)=>{
 }
 
 
+//API TO DELETE IMAGE
 export const deleteImage=async(imgId:string)=>{
     const response=await baseURL.put('/deleteImage',{imgId})
     return response.data

@@ -16,9 +16,12 @@ interface Dialog{
     files:any
   }
  
+  //DELETE IMAGE CONFIRMATION DIALOG
 const DeleteDialog:React.FC<Dialog>=({fileToDelete,openDelete,handleOpenDelete,setFiles,files})=> {
     
     const handleDelete = async () => {
+
+        //FUNCTION TO DELETE IMAGE
         const response = await deleteImage(fileToDelete)
         if (response) {
             const updatedFiles = files.filter((myFiles: { _id: string; }) => myFiles._id != fileToDelete)

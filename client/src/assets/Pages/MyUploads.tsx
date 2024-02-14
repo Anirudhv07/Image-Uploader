@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react'
-import ProfileButton from '../Components/Home/Button'
 import { MyNavbar } from '../Components/Home/NavBar'
 import AddDialog from '../Components/MyUploads/Dialog'
 import { EllipsisVerticalIcon, ArrowDownCircleIcon, TrashIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import {
     Card,
     CardHeader,
-    CardBody,
-    CardFooter,
     Typography,
-    Tooltip,
     Button,
     Menu,
     MenuHandler,
@@ -20,8 +16,7 @@ import {
 } from "@material-tailwind/react";
 import { useState } from 'react';
 import { useSelector } from 'react-redux'
-import { deleteImage, getMyUploads, verifyTheCode } from '../api/apiConnection/connection'
-import { string } from 'yup'
+import {  getMyUploads, verifyTheCode } from '../api/apiConnection/connection'
 import {
     Dialog,
     DialogHeader,
@@ -38,9 +33,6 @@ interface UploadData {
 };
 
 const MyUploads = () => {
-
-    const [verifyCode, setVerifyCode] = useState('')
-
     const [openDownload, setOpenDownload] = React.useState(false);
     const [codeLength, setCodeLength] = useState(false)
     const [checkDigits, setCheckDigits] = useState(false)
@@ -50,32 +42,30 @@ const MyUploads = () => {
     const [loading, setLoading] = useState(false)
     const [codeStatus, setCodeStatus] = useState('')
     const [codeStatusStyle, setCodeStatusStyle] = useState('')
-
-
-    const handleOpenDownload = () => setOpenDownload(!openDownload);
-
     const [open, setOpen] = React.useState(false);
-    const { email } = useSelector((store: any) => store.user)
-
-    const handleOpen = () => setOpen(!open);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
     const [allMyUploads, setAllMyUploads] = useState<UploadData[]>([])
-    const [afterDelete, setAfterDelete] = useState({})
-
     const [openDelete, setOpenDelete] = useState(false);
     const [fileToDelete, setFileToDelete] = useState('')
 
+
+    const handleOpenDownload = () => setOpenDownload(!openDownload);
+    const handleOpen = () => setOpen(!open);
     const handleOpenDelete = (fileId: string) => {
 
         setFileToDelete(fileId)
         setOpenDelete(!openDelete);
     }
 
+    const { email } = useSelector((store: any) => store.user)
+
+
     useEffect(() => {
         myUploads()
     }, [])
 
+
+    //FUNCTION TO GET MY UPLOADED FILES
     const myUploads = async () => {
         setLoading(true)
 
@@ -87,12 +77,15 @@ const MyUploads = () => {
 
     }
 
+      //FUNCTION TO HANDLE DOWNLOAD
     const handleDownload = (file: string, id: string) => {
         setImgId(id)
         setCurrentFile(file)
         handleOpenDownload()
     }
 
+
+    //FUNCTION TO DOWNLOAD IMAGE
     const handleDownloadImage = async () => {
         try {
             await fetch(`http://localhost:3003/uploads/${currentFile}`)
@@ -113,6 +106,7 @@ const MyUploads = () => {
     };
 
 
+    //FUNCTION TO HANDLE THE UNIQUE CODE
     const handleVerifyCode = (e: any) => {
         setCodeStatus('')
         const value = e.target.value
@@ -121,11 +115,9 @@ const MyUploads = () => {
             setCheckDigits(true)
 
 
-            // Prevent further input by preventing default behavior
             e.preventDefault();
         } else {
             setCheckDigits(false)
-            // Check if the length of the value exceeds 6
             if (value.length != 6) {
 
                 setCodeLength(true);
@@ -134,12 +126,12 @@ const MyUploads = () => {
                 setUniqueCode(value);
             }
 
-            // Update the state with the new value
         }
 
     }
 
 
+    //FUNCTION TO VERIFY UNIQUE CODE
     const checkUniqueCode = async () => {
         const response = await verifyTheCode(uniqueCode, imgId)
         if (response.status == true) {
@@ -152,7 +144,7 @@ const MyUploads = () => {
         }
     }
 
-   
+
 
     return (
         <div className='h-screen'>
@@ -227,7 +219,7 @@ const MyUploads = () => {
                                             </CardHeader>
                                             <div className='flex justify-center items-center pb-2'>
 
-                                                <p>Unique code:<span>{myUploads.uniqueCode}</span></p>
+                                                <p>Unique code: <span>{myUploads.uniqueCode}</span></p>
                                             </div>
 
                                         </Card>
@@ -249,11 +241,11 @@ const MyUploads = () => {
                 </div>
             }
 
-<DeleteDialog fileToDelete={fileToDelete}
+            <DeleteDialog fileToDelete={fileToDelete}
                 openDelete={openDelete}
                 handleOpenDelete={handleOpenDelete}
-                setFiles={ setAllMyUploads} 
-                files={allMyUploads }
+                setFiles={setAllMyUploads}
+                files={allMyUploads}
             />
             <AddDialog handleOpen={handleOpen} open={open} setAllMyUploads={setAllMyUploads} allMyUploads={allMyUploads} />
 

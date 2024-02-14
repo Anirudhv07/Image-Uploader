@@ -1,7 +1,7 @@
 import { Button, Menu, MenuHandler, MenuItem, MenuList, Typography } from '@material-tailwind/react';
-import { ChevronDownIcon, HomeIcon, PrinterIcon } from "@heroicons/react/20/solid";
+import { ChevronDownIcon} from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { setLogOut } from '../../redux/slice';
@@ -46,10 +46,6 @@ const ProfileButton = () => {
       </MenuHandler>
       <MenuList  placeholder={undefined}>
 
-
-  
-
-        {/* <hr className="my-2 border-blue-gray-50" /> */}
         <MenuItem className="flex items-center gap-2 " onClick={signOut}  placeholder={undefined}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

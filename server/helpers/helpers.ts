@@ -54,21 +54,19 @@ export const verifyToken=(token:string)=>{
     }
 }
 
+//UPLOAD HELPER
 export const uploadHelper=async(fileName:any,email:string,uniqueCode:string)=>{
 
     const newUpload={
         fileName,
         email,
         uniqueCode
-    }
-
-    console.log(newUpload);
-    
+    }    
     const newImageUpload=new File(newUpload)
     return await newImageUpload.save()
 }
 
-
+//UNIQUE CODE HELPER
 export const uniqueCodeHelper= async(uniqueCode:string)=>{
     const response= await File.findOne({uniqueCode:uniqueCode})
     if(response){
@@ -79,17 +77,22 @@ export const uniqueCodeHelper= async(uniqueCode:string)=>{
     
 }
 
+
+//GET ALL FILE HELPER
 export const allFilesHelper= async()=>{
     const response= await File.find().sort({createdAt:-1})
-    return response
+    const filteredResponse = response.map(({ _id, fileName, email }) => ({ _id, fileName, email }));
+    return filteredResponse
 }
 
 
+//GET MY UPLOAD HELPER
 export const myUploadsHelper= async(email:any)=>{
-    const response= await File.find({email:email}).sort({createdAt:-1})
+    const response= await File.find({email:email}).sort({createdAt:-1})   
     return response
 }
 
+//VERIFY UNIQUE CODE HELPER
 export const verifyCodeHelper= async(code:any,imgId:any)=>{
     const response= await File.findOne({_id:imgId})
     if(response?.uniqueCode==code){
@@ -100,6 +103,8 @@ export const verifyCodeHelper= async(code:any,imgId:any)=>{
     
 }
 
+
+//DELETE IMAGE HELPER
 export const deleteImageHelper= async(imgId:any)=>{
     const response = await File.findOneAndDelete({ _id: imgId });
     if(response){
