@@ -207,7 +207,7 @@ signUp: async (req:Request, res:Response) => {
             
             const {imgId}=req.body
             const response= await deleteImageHelper(imgId)
-            return response
+            res.json(response)
     
         }
         catch(err){

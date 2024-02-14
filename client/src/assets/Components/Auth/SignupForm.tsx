@@ -34,7 +34,7 @@ import {
           .email("Invalid Email address")
           .required('Required'),
         password: Yup.string()
-          .max(10, 'Password must be less than 10 character')
+          .min(8,'Password must be more than 8 character')
           .required('Required')
       }),
       onSubmit: async (values) => {

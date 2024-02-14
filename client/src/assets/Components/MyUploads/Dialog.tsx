@@ -36,6 +36,7 @@ const AddDialog:React.FC<Dialog>=({handleOpen,open,setAllMyUploads,allMyUploads}
     const [checkDigits,setCheckDigits]=useState(false)
     const [isUnique,setIsUnique]=useState('')
     const [isUniqueStyle,setIsUniqueStyle]=useState('')
+    const [imageNotFound,setImageNotFound]=useState(false)
 
   
 
@@ -97,17 +98,19 @@ const AddDialog:React.FC<Dialog>=({handleOpen,open,setAllMyUploads,allMyUploads}
                     setAllMyUploads([response,...allMyUploads])
                     setUniqueCode(0)
                     setImagePresent(false)
+                    setImageFileURL('')
+                    setIsUnique('')
                     handleOpen()
                  
                 }else{
                     
                 }
             }else{
-
+                setIsUnique('Error occured')
             }
 
         }else{
-            toast.error('Please select an Image')
+            setImageNotFound(true)
         }
        
 
@@ -175,12 +178,13 @@ const AddDialog:React.FC<Dialog>=({handleOpen,open,setAllMyUploads,allMyUploads}
                         }} crossOrigin={undefined}
                         onChange={handleUniqueCode}/>
 
-                        <Button placeholder={undefined} onClick={checkUniqueCode}>Check</Button>
+                        <Button placeholder={undefined} className="bg-blue-500" onClick={checkUniqueCode}>Check</Button>
                         </div>
 
                     {isUnique==''?<div></div>:<div className={`${isUniqueStyle}`}>{isUnique}</div>}
                      {codeLength?<p className="my-2 text-red-600">Code should be 6 digits</p>:<div></div>}   
                      {checkDigits?<p className="my-2 text-red-600">Numbers are only allowed</p>:<div></div>}
+                     {!imageNotFound?<div></div>:<p className="my-2 text-red-600">Image not found</p>}
 
                     <Button className="mt-6 bg-green-500" type="submit" fullWidth placeholder={undefined}
                       disabled={codeLength || checkDigits || isUnique=='Code already exist'}>

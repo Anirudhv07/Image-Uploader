@@ -22,15 +22,15 @@ const ProfileButton = () => {
     navigate('/')
   }
   return (
-    <Menu>
+    <Menu >
       <MenuHandler>
 
 
         <Button
                   variant="text"
-                  color="blue-gray"
-                  className="flex items-center gap-1 py-0.5 pr-2 pl-0.5 lg:ml-auto"  placeholder={undefined}        >
-          <Button  placeholder={undefined}>
+                  
+                  className="flex items-center gap-1 py-0.5 pr-2 pl-0.5 lg:ml-auto "  placeholder={undefined}        >
+          <Button  placeholder={undefined} className='bg-green-500'>
             <div className='flex flex-row gap-2'>
 
               {name}
