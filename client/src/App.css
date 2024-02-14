@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color:#66bb6a ; /* Replace with your desired color code */
+    background-attachment: fixed;
+  }
+  
+  /* Add other styles as needed */
+  .placeholder-opacity-100::placeholder {
+    opacity: 1 !important;
+  }
+  
+  .input_custom_style{
+    text-align:-webkit-center;
+  }
+
+  
